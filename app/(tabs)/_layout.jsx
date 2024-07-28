@@ -46,7 +46,7 @@ const TabsLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.home}
+                icon={icons.home} //we get this from the imported icons from constants folder
                 color={color}
                 name="Home"
                 focused={focused}

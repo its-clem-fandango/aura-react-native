@@ -3,6 +3,7 @@ import { Slot, Stack, SplashScreen } from "expo-router";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 
+//prevent splashscreen from autohiding
 SplashScreen.preventAutoHideAsync();
 
 //rnfes for boilerplate:
@@ -29,10 +30,16 @@ const RootLayout = () => {
     }
   }, [fontsLoaded, error]);
 
+  //ensures the app does not render any UI until the fonts are ready
   if (!fontsLoaded && !error) {
     return null;
   }
   return (
+    /* Stack creates stack-based navigation where screens are placed on top of each other. 
+    Stack.Screen defines each screen in the stack.
+    
+    name="index" tells the router to use the index.jsx file as the default screen. We dont need / because its in root directory
+    */
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
     </Stack>
