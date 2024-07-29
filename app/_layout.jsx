@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Slot, Stack, SplashScreen } from "expo-router";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
+import GlobalProvider from "../context/GlobalProvider.js";
 
 //prevent splashscreen from autohiding
 SplashScreen.preventAutoHideAsync();
@@ -36,13 +37,17 @@ const RootLayout = () => {
   }
   return (
     /* Stack creates stack-based navigation where screens are placed on top of each other. 
-    Stack.Screen defines each screen in the stack.
+    Stack.Screen defines each screen in the stack. If you want to hide the header for each screen you can do it here
     
     name="index" tells the router to use the index.jsx file as the default screen. We dont need / because its in root directory
     */
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-    </Stack>
+    <GlobalProvider>
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
+    </GlobalProvider>
   );
 };
 

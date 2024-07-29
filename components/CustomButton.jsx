@@ -1,6 +1,17 @@
 import { TouchableOpacity, Text } from "react-native";
 import React from "react";
 
+/**
+ * CustomButton component.
+ *
+ * @param {Object} props - Component props.
+ * @param {string} props.title - The text to display inside the button.
+ * @param {Function} props.handlePress - The function to call when the button is pressed.
+ * @param {string} [props.containerStyles] - Additional styles for the button container.
+ * @param {string} [props.textStyles] - Additional styles for the button text.
+ * @param {boolean} [props.isLoading=false] - Whether the button is in a loading state.
+ */
+
 //these props come from our index.jsx which consumes the component
 const CustomButton = ({
   title,
