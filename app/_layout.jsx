@@ -36,12 +36,16 @@ const RootLayout = () => {
     return null;
   }
   return (
-    /* Stack creates stack-based navigation where screens are placed on top of each other. 
-    Stack.Screen defines each screen in the stack. If you want to hide the header for each screen you can do it here
-    
-    name="index" tells the router to use the index.jsx file as the default screen. We dont need / because its in root directory
+    /* NOTES: 
+    - GlobalProvider wraps our entire app. 
+    - The {children} prop is a special react prop you can see in GlobalProvider.js that represents all of the components that are nested here within GlobalProvider so that we dont have to pass them as props manually 
     */
     <GlobalProvider>
+      {/* NOTES: Stack creates stack-based navigation where screens are placed on top of each other. 
+      Stack.Screen defines each screen in the stack. If you want to hide the header for each screen you can do it here
+      
+      name="index" tells the router to use the index.jsx file as the default screen. We dont need / because its in root directory
+    */}
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />

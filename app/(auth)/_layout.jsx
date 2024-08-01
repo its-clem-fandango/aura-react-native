@@ -8,6 +8,7 @@ import React from "react";
 const AuthLayout = () => {
   return (
     <>
+      {/* NOTES: our login process uses stacked screens, but the (tabs) layout uses tabs which gives us our footer with home,bookmark,etc */}
       <Stack>
         <Stack.Screen
           name="sign-in"
