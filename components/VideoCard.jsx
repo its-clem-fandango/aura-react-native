@@ -1,6 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { icons } from "../constants";
 import { useState } from "react";
+import { Video, ResizeMode } from "expo-av";
 
 //we know how to destructure the items that are passed here from flatlist because of the appwrite documentation presumably
 const VideoCard = ({
@@ -44,7 +45,24 @@ const VideoCard = ({
         </View>
       </View>
       {play ? (
-        <Text className="text-white">Playing</Text>
+        <Video
+          source={{ uri: video }}
+          className="w-full h-60 rounded-xl mt-3"
+          resizeMode={ResizeMode.CONTAIN}
+          useNativeControls
+          shouldPlay
+          onPlaybackStatusUpdate={(status) => {
+            if (status.error) {
+              console.error("Video playback error:", status.error);
+              setPlay(false); // Stop playing on error
+            } else if (status.didJustFinish) {
+              setPlay(false);
+            }
+          }}
+          onError={(error) => {
+            console.error("Video onError:", error);
+          }}
+        />
       ) : (
         <TouchableOpacity
           activeOpacity={0.7}
