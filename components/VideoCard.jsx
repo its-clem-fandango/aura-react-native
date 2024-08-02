@@ -2,6 +2,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { icons } from "../constants";
 import { useState } from "react";
 
+//we know how to destructure the items that are passed here from flatlist because of the appwrite documentation presumably
 const VideoCard = ({
   video: {
     title,

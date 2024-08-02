@@ -13,12 +13,13 @@ import SearchInput from "../../components/SearchInput";
 import Trending from "../../components/Trending";
 import EmptyState from "../../components/EmptyState";
 import useAppwrite from "../../lib/useAppwrite";
-import { getAllPosts } from "../../lib/appwrite";
+import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 import VideoCard from "../../components/VideoCard";
 
 const Home = () => {
   /* NOTES: this destructuring is for useAppwrite.js hook that receives dynamic functions as params. data:posts is renaming data to posts */
   const { data: posts, refetch } = useAppwrite(getAllPosts);
+  const { data: latestPosts } = useAppwrite(getLatestPosts);
 
   /* Refresh control logic */
   const [refreshing, setRefreshing] = useState(false);
@@ -29,7 +30,6 @@ const Home = () => {
     setRefreshing(false);
   };
 
-  console.log("****POSTS****", posts);
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
@@ -60,7 +60,7 @@ const Home = () => {
               <Text className="text-gray-100 font-pregular mb-3">
                 Latest Videos
               </Text>
-              <Trending posts={[{ id: 1 }, { id: 2 }, { id: 3 }] ?? []} />
+              <Trending posts={latestPosts ?? []} />
             </View>
           </View>
         )}
@@ -85,10 +85,13 @@ export default Home;
 Flatlist is a more optimized version of ScrollView for rendering lists, and comes with built-in scroll capabilities which is why RefreshControl works with FlatList
 
 Key Props of FlatList: 
-- data: The array of data items to render (FlatList expects data to be an array of items. If data is an object/anything else it will break).
+- data: The array of data items to render (FlatList expects data to be an array of items. It can (must?) be an array of objects, but if the data is an object on its own it will break).
 - keyExtractor: A function to extract a unique key for each item.
 - renderItem: A function that returns the component for each item in the list.
 - ListHeaderComponent: A component that is rendered at the top of the list.
-- ListEmptyComponent: A component that is rendered when the list is empty.
--RefreshControl: A component used inside flatlist/scrollview/listview to add a pull to refresh functionality. It's key props are refreshing= and onRefresh= but has others
+- ListEmptyComponent: A component that is rendered when the list is empty (e.g. user hasnt uploaded anything yet).
+- RefreshControl: A component used inside flatlist/scrollview/listview to add a pull to refresh functionality. It's key props are refreshing= and onRefresh= but has others
+- horizontal: Flatlist uses a vertical list by default, if you add horizontal you can add horizontal scrolling (used in Trending component)
+
+NOTES: one of my list items wasn't formatted correctly but the other two were. I thought the issue was something with in my code but that doesn't make sense. Why would Flatlist/map only render one item with different formatting? Turns out the issue was with the spacing of the document i created in my DB. It makes sense because only one item was rendering weird
 */

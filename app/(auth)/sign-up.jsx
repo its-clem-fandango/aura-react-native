@@ -7,7 +7,6 @@ import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
 import { createUser } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
-
 const SignUp = () => {
   const { setUser, setIsLoggedIn } = useGlobalContext();
   const [form, setForm] = useState({
@@ -42,9 +41,8 @@ const SignUp = () => {
     } finally {
       setIsSubmitting(false); //because either way if it submitted or failed the loading is done
     }
-
-    /*     createUser();
-     */
+    /* 
+    createUser(); */
   };
   return (
     /* NOTES: this is a safe area view from react-native-safe-area-context. Also note min-h-[80] being used for centering because it accounts for varying screen heights unlike flexbox. It means the vertical alignment will always be at least 80% of the screen's height  */

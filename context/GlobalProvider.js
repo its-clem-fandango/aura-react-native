@@ -50,18 +50,19 @@ const GlobalProvider = ({ children }) => {
       }}
     >
       {children}
-      {/* NOTES: 
-      - "children" is a special built-in prop in react that allows components to pass other components as a prop. 
-      - It represents everything you want to wrap with the global context (all nested components). 
-      - When you use "children" in the provider, it allows all the nested components to access the context's value. 
-      - If you remove "children", none of the nested components will render because GlobalProvider wont' have anything to render. 
-      - "Children" must always be included in the provider.
-      - Check the _layout.jsx to see all the child components the GlobalContext.Provider is passing its props to*/}
     </GlobalContext.Provider>
   );
 };
 
 export default GlobalProvider;
+
+/* NOTES: 
+- "children" is a special built-in prop in react that allows components to pass other components as a prop. 
+- It represents everything you want to wrap with the global context (all nested components). 
+- When you use "children" in the provider, it allows all the nested components to access the context's value. 
+- If you remove "children", none of the nested components will render because GlobalProvider wont' have anything to render. 
+- "Children" must always be included in the provider.
+- Check the _layout.jsx to see all the child components the GlobalContext.Provider is passing its props to*/
 
 /* NOTES: SEQUENCE OF EVENTS WHEN CREATING CONTEXT:
 1. Create the context object that will hold the global state and functions using createContext()

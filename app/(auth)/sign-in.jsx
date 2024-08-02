@@ -4,18 +4,17 @@ import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { getCurrentUser, signIn } from "../../lib/appwrite";
-import { router } from "expo-router";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const SignIn = () => {
   const { setUser, setIsLoggedIn } = useGlobalContext();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const submit = async () => {
     //check if we have the data first
@@ -54,9 +53,11 @@ const SignIn = () => {
             resizeMode="contain"
             className="w-[115px] h-[35px]"
           />
+
           <Text className="text-2xl text-white text-semibold mt-10 font-psemibold">
             Log in to Aora
           </Text>
+
           <FormField
             title="Email"
             value={form.email}
@@ -64,6 +65,7 @@ const SignIn = () => {
             otherStyles="mt-7"
             keyboardType="email-address" //useful for autofilling
           />
+
           <FormField
             title="Password"
             value={form.password}
@@ -82,7 +84,7 @@ const SignIn = () => {
               Don't have an account?
             </Text>
             <Link
-              href="sign-up"
+              href="/sign-up"
               className="text-leg font-psemibold text-secondary"
             >
               Sign Up
