@@ -8,13 +8,12 @@ import { searchPosts } from "../../lib/appwrite";
 import VideoCard from "../../components/VideoCard";
 import { useLocalSearchParams } from "expo-router";
 
-//putting the filename in brackets [] also borrows from nextjs. It creates a dynamic route, i.e. we can extract the value of a search out of the input with the [] as the filename
+//putting the filename in brackets [] also borrows from nextjs. It creates a dynamic route, i.e. we can extract the value of a search out of the input/screen with the [] as the filename
 
 const Search = () => {
-  const { query } = useLocalSearchParams();
+  const { query } = useLocalSearchParams(); //we get the query from here
   const { data: posts, refetch } = useAppwrite(() => searchPosts(query));
 
-  console.log("***QUERY & POSTS***", query, posts);
   useEffect(() => {
     //everytime query changes call refetch which re-renders page
     refetch();
@@ -50,3 +49,19 @@ const Search = () => {
 };
 
 export default Search;
+
+/* NOTES: 
+
+on Param hooks like useLocalSearchParams:
+
+URL parameters include both route parameters and search parameters. Expo Router provides 
+hooks for accessing and modifying these parameters.
+
+
+Route parameters are dynamic segments defined in a URL path, such as /profile/[user], 
+where user is a route parameter. They are used to match a route.
+
+Search parameters (also known as query params) are serializable fields that can be 
+appended to a URL, such as /profile?extra=info, where extra is a search parameter. 
+They are commonly used to pass data between pages.
+*/

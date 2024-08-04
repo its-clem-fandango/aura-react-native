@@ -11,6 +11,7 @@ import { icons } from "../constants";
 import { usePathname, router } from "expo-router";
 
 const SearchInput = ({ initialQuery }) => {
+  //usePathname provides the current path of the URL in your app so you can know exactly where the user is within your app. By knowing the current path, you can apply conditional logic like whether to update the search parameters in the URL or navigate to a new results page
   const pathname = usePathname();
   const [query, setQuery] = useState(initialQuery || "");
 
@@ -31,6 +32,7 @@ const SearchInput = ({ initialQuery }) => {
               "Please input something to search results across database"
             );
           }
+          //if we're already on the search page, set the search param to whatever the query is
           if (pathname.startsWith("/search")) router.setParams({ query });
           else router.push(`/search/${query}`);
         }}

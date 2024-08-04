@@ -15,8 +15,10 @@ import EmptyState from "../../components/EmptyState";
 import useAppwrite from "../../lib/useAppwrite";
 import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 import VideoCard from "../../components/VideoCard";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const Home = () => {
+  const { user, setUser, setIsLoggedIn } = useGlobalContext();
   /* NOTES: this destructuring is for useAppwrite.js hook that receives dynamic functions as params. data:posts is renaming data to posts */
   const { data: posts, refetch } = useAppwrite(getAllPosts);
   const { data: latestPosts } = useAppwrite(getLatestPosts);
@@ -41,10 +43,11 @@ const Home = () => {
             <View className="justify-between items-start flex-row mb-6">
               <View>
                 <Text className="font-pmedium text-sm text-gray-100">
-                  Welcome back
+                  Welcome back,
                 </Text>
                 <Text className="font-psemibold text-2xl text-white">
-                  JsMastery
+                  {/* user comes from globalcontext object from db but username comes from appwrites handling of users which uses "username" -->db-->users-->usename */}
+                  {user?.username}
                 </Text>
               </View>
               <View className="mt-1.5">
