@@ -10,7 +10,7 @@ import { useState } from "react";
 import { icons } from "../constants";
 import { usePathname, router } from "expo-router";
 
-const SearchInput = ({ initialQuery }) => {
+const SearchInput = ({ initialQuery, searchQuery }) => {
   //usePathname provides the current path of the URL in your app so you can know exactly where the user is within your app. By knowing the current path, you can apply conditional logic like whether to update the search parameters in the URL or navigate to a new results page
   const pathname = usePathname();
   const [query, setQuery] = useState(initialQuery || "");
@@ -32,9 +32,21 @@ const SearchInput = ({ initialQuery }) => {
               "Please input something to search results across database"
             );
           }
-          //if we're already on the search page, set the search param to whatever the query is
-          if (pathname.startsWith("/search")) router.setParams({ query });
-          else router.push(`/search/${query}`);
+          /* NOTES: query captures the search term, onSearch function is provided by the parent bookmark, and is called with the current search query */
+          if (searchQuery) {
+            searchQuery(query);
+          }
+          //if we're already on the search page or bookmark pg, set the search param to whatever the query is e.g. ?query=dogs ?query=cat
+          if (
+            pathname.startsWith("/search") ||
+            pathname.startsWith("/bookmark")
+          ) {
+            router.setParams({ query });
+          }
+          //otherwise take us to the search page
+          else {
+            router.push(`/search/${query}`);
+          }
         }}
       >
         <Image source={icons.search} className="w-5 h-5" resizeMode="contain" />
