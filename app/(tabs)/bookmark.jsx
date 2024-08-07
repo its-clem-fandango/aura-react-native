@@ -1,4 +1,4 @@
-import { FlatList, Text, View, Image } from "react-native";
+import { FlatList, Text, View, Image, RefreshControl } from "react-native";
 import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SearchInput from "../../components/SearchInput";
@@ -8,25 +8,11 @@ import VideoCard from "../../components/VideoCard";
 import { router, useLocalSearchParams } from "expo-router";
 import CustomButton from "../../components/CustomButton";
 import { images } from "../../constants";
-import { useGlobalContext, user } from "../../context/GlobalProvider";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 //putting the filename in brackets [] also borrows from nextjs. It creates a dynamic route, i.e. we can extract the value of a search out of the input/screen with the [] as the filename
 
 const Bookmark = () => {
-  //Saved Videos screen similar to search
-
-  //ability to search saved videos
-
-  /*   add heart icon next to each post/card in homepage. when an item is hearted
-it makes an appwrite update request to add the user's id that liked that post to mark the 
-post as liked by that specific user. for this you need to go to db --> videos --> and add additional 
-attributes such as "liked" which will have a relation to users. It will be an array
-of user ids that have liked that post.
-
-once you have that you can make a new request that fetches all the liked posts by the current user.
-which is where you can develop the save videos screen where you show the videos that you fetch
- */
-
   const { user } = useGlobalContext();
   const { query } = useLocalSearchParams(); //we get the query from here
 
@@ -36,6 +22,15 @@ which is where you can develop the save videos screen where you show the videos 
     refetch,
   } = useAppwrite(() => getUserLikes(user.$id, query));
   const [uploading, setUploading] = useState(false);
+
+  /* Refresh control logic */
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = async () => {
+    setRefreshing(true);
+    //recall posts --> to refresh pg and see if any new vids appear
+    await refetch();
+    setRefreshing(false);
+  };
 
   useEffect(() => {
     refetch();
@@ -86,6 +81,9 @@ which is where you can develop the save videos screen where you show the videos 
             />
           </View>
         )}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
     </SafeAreaView>
   );

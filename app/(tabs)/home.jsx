@@ -37,7 +37,7 @@ const Home = () => {
       <FlatList
         data={posts}
         keyExtractor={(item) => item.$id}
-        renderItem={({ item }) => <VideoCard video={item} userId={user.$id} />} //passing the user.$id is what lets the VideoCard know if a post has been liked
+        renderItem={({ item }) => <VideoCard video={item} userId={user.$id} />} //passing the user.$id is what lets the VideoCard know if a post has been liked by the current user. we also had to do this in the [query] component which is just the search page.
         ListHeaderComponent={() => (
           <View className="my-6 px-4 space-y-6">
             <View className="justify-between items-start flex-row mb-6">

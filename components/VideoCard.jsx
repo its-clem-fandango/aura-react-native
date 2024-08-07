@@ -16,13 +16,16 @@ const VideoCard = ({
     creator: { username, avatar },
     likes,
   },
-  userId,
+  userId, //helps us determine if the user has liked the video
 }) => {
   const [play, setPlay] = useState(false);
   const [isLiked, setisLiked] = useState(false);
 
   // Check if user has bookmarked the video
-  useEffect(() => {
+
+  /*   NOTES: the likes object has the accountId's of every user who's liked the video and userId 
+is the userId from the global context user.$id of the current user --> which globalcontext gets from getcurrentuser in appwrite.jsx
+ */ useEffect(() => {
     if (likes) {
       setisLiked(likes.some((like) => like.accountId === userId));
     }

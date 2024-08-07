@@ -10,6 +10,7 @@ import { useState } from "react";
 import { icons } from "../constants";
 import { usePathname, router } from "expo-router";
 
+// This component manages its local state for the query input.
 const SearchInput = ({ initialQuery, searchQuery }) => {
   //usePathname provides the current path of the URL in your app so you can know exactly where the user is within your app. By knowing the current path, you can apply conditional logic like whether to update the search parameters in the URL or navigate to a new results page
   const pathname = usePathname();
@@ -26,12 +27,6 @@ const SearchInput = ({ initialQuery, searchQuery }) => {
       />
       <TouchableOpacity
         onPress={() => {
-          if (!query) {
-            return Alert.alert(
-              "Missing query",
-              "Please input something to search results across database"
-            );
-          }
           /* NOTES: query captures the search term, onSearch function is provided by the parent bookmark, and is called with the current search query */
           if (searchQuery) {
             searchQuery(query);
